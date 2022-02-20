@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="input-data">
+    <script>
+        var input_data = document.getElementById('input-data');
+
+        function inputValidate(data) {
+
+            /* Валидация строки с дробным числом */
+            parseFloat_validate = function (data) {
+                invalid_dot = 0; // Счётчик некорректно введённых '.'
+                invalid_minus = 0; // Счётчик некорректно введённых '-'
+                number_of_characters_after_the_dot = 0; // Счётчик введённых цифр после '.'
+                i = 0; // Итератор
+                // Проходим по строке
+                for (const d of data) {
+                    i++;
+                    // Если (данный элемент строки это '.'), то увеличиваем счётчик некорректно введённых '.'
+                    if (d == '.') { invalid_dot++; }
+                    // Если (некорректно введённых '.' равно единице), то увеличиваем счётчик введённых цифр после '.'
+                    if (invalid_dot == 1) { number_of_characters_after_the_dot++; }
+                    // Если ((это не первая итерация) и (данный элемент строки это '-')) 
+                    // или (счётчик некорректно введённых '.' больше единицы) или (счётчик введённых цифр после '.' больше трёх), 
+                    // то возвращаем false
+                    if (((1 < i) && (d == '-')) || (1 < invalid_dot) || (3 < number_of_characters_after_the_dot)) { return false; }
+                }
+                // В случае, если цикл успешно прошёл и не удовлетворил условия возврата false, то возвращаем true
+                return true;
+            };
+
+            /* Предусматриваем форс-мажорные ситуации */
+
+            // Если размерность строки >= 3, то
+            if (data.length >= 3) {
+                // Если (первый элемент строки это '-') и (второй элемент строки это '0'), 
+                // но (третий элемент строки не является '.'), то возвращаем false
+                if (((data[0] == '-') && ((data[1] == '0') && (data[2] != '.')))) { return false; }
+                // Иначе если строка является действительно дробным числом, 
+                // то возвращаем результат валидации строки с дробным числом
+                else if (parseFloat(data) != NaN) { return parseFloat_validate(data); }
+            }
+            // Иначе если размерность строки >= 2, то
+            else if (data.length >= 2) {
+                // Если (первый элемент строки это '0'), но (второй элемент строки не является '.'), то возвращаем false
+                if (((data[0] == '0') && (data[1] != '.'))) { return false; }
+                // Иначе если (первый элемент строки это '-') и (второй элемент строки это '.'), то возвращаем false
+                else if ((data[0] == '-') && (data[1] == '.')) { return false; }
+                // Иначе если строка является действительно дробным числом, 
+                // то возвращаем результат валидации строки с дробным числом
+                else if (parseFloat(data) != NaN) { return parseFloat_validate(data); }
+            }
+            // Иначе
+            else {
+                // Если (первый элемент строки это '.'), то возвращаем false
+                if (data[0] == '.') { return false; }
+                // Иначе если строка является действительно дробным числом, 
+                // то возвращаем результат валидации строки с дробным числом
+                else if (parseFloat(data) != NaN) { return parseFloat_validate(data); }
+                // Иначе возвращаем false
+                else { return false; }
+            }
+
+            // Возврат false означает, что введённый пользователем символ будет недопущен, т.к. не удовлетворяет условиям
+            // Возврат true означает, что введённый пользователем символ будет допущен, т.к. удовлетворяет условиям
+
+        }
+
+        input_data.oninput = function (e) {
+            switch (e.data) {
+                case "1":
+                    if (inputValidate(input_data.value)) {
+                        break;
+                    }
+                case "2":
+                    if (inputValidate(input_data.value)) {
+                        break;
+                    }
+                case "3":
+                    if (inputValidate(input_data.value)) {
+                        break;
+                    }
+                case "4":
+                    if (inputValidate(input_data.value)) {
+                        break;
+                    }
+                case "5":
+                    if (inputValidate(input_data.value)) {
+                        break;
+                    }
+                case "6":
+                    if (inputValidate(input_data.value)) {
+                        break;
+                    }
+                case "7":
+                    if (inputValidate(input_data.value)) {
+                        break;
+                    }
+                case "8":
+                    if (inputValidate(input_data.value)) {
+                        break;
+                    }
+                case "9":
+                    if (inputValidate(input_data.value)) {
+                        break;
+                    }
+                case "0":
+                    if (inputValidate(input_data.value)) {
+                        break;
+                    }
+                case ".":
+                    if (inputValidate(input_data.value)) {
+                        break;
+                    }
+                case "-":
+                    if (inputValidate(input_data.value)) {
+                        break;
+                    }
+                default:
+                    // Удаляем последний элемент строки, тем самым не допускаем ввод символа исходя из условий валидации
+                    input_data.value = input_data.value.slice(0, -1);
+                    break;
+            }
+        };
+    </script>
+</body>
+
+</html>
